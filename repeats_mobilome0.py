@@ -9,6 +9,7 @@ import pandas as pd
 import statistics 
 from collections import OrderedDict
 
+# Store simplified mapping file into a dictionary
 def read_parsed_paf(file_in):
 	paf={}
 	with open(file_in, 'r') as f:   
@@ -34,11 +35,12 @@ def read_parsed_paf(file_in):
 
 def compare_reads(paf1):
 
+	# In the dictionnary
 	for k1,v1 in list(paf1.items()):
 		
 		paf2={k: v for k, v in paf1.items()  if (v["readname"] == v1["readname"] and k != k1) }		
 
-		
+		# If the read name, the scaffold and the is the strand is the same and the multiple mapping position of the reads are within 200 bp, it is considered as a repetition
 		for k2,v2 in list(paf2.items()):
 			#print (k1,k2,"\n")
 			if v1["readname"]==v2["readname"] and v1["ref_scaffold"]==v2["ref_scaffold"] and v1["strand"]==v2["strand"] and ((v2["ref_end"]-200 <= v1["ref_end"] and v1["ref_end"] <= v2["ref_end"]+200) or (v2["ref_start"]-200 <= v1["ref_start"] and v1["ref_start"] <= v2["ref_start"]+200)) :
@@ -54,7 +56,7 @@ def compare_reads(paf1):
 					v1["MQ"]=v1["MQ"]
 				else :
 					v1["MQ"]=v2["MQ"]
-				#del paf1[k2]
+			# If the read name, scaffold, strand and start position is the same, it is considered as a repetition 	
 			elif v1["readname"]==v2["readname"] and v1["ref_scaffold"]==v2["ref_scaffold"] and v1["strand"]==v2["strand"] and v2["ref_end"]==v1["ref_end"] and v1["ref_start"] != v2["ref_start"] :
 				read_start=list(OrderedDict.fromkeys(v1["read_start"]+v2["read_start"]))
 				read_end=list(OrderedDict.fromkeys(v1["read_end"]+v2["read_end"]))
@@ -68,7 +70,7 @@ def compare_reads(paf1):
 					v1["MQ"]=v1["MQ"]
 				else :
 					v1["MQ"]=v2["MQ"]
-				#del paf1[k2]	
+			# If the read name, scaffold, strand and end position is the same, it is considered as a repetition 	
 			elif v1["readname"]==v2["readname"] and v1["ref_scaffold"]==v2["ref_scaffold"] and v1["strand"]==v2["strand"] and v2["ref_end"] != v1["ref_end"] and v1["ref_start"] == v2["ref_start"] :
 				read_start=list(OrderedDict.fromkeys(v1["read_start"]+v2["read_start"]))
 				read_end=list(OrderedDict.fromkeys(v1["read_end"]+v2["read_end"]))
