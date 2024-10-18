@@ -1,4 +1,4 @@
-# The aim of this script is to remove redundancy of families by clustering TE consensus sequences
+# The aim of this script is to remove redundancy of families by clustering TE consensus sequences using Silix and Blastn
 
 # Creating TE library database in blast format
 makeblastdb -in FsylCur4_denovoLibTEs.fa  -title FsylCur4_denovoLibTEs.fa -dbtype nucl
