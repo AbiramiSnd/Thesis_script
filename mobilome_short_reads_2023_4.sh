@@ -1,4 +1,4 @@
-# The aim of this script is to run eccFinder on mobilome-seq short read samples and 
+# The aim of this script is to run eccFinder on mobilome-seq short read samples and identity TE related eccDNA peaks
 
 # actiave eccFinder enviroment
 conda activate ecc_finder (version 2/11/2021)
