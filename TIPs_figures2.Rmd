@@ -1,78 +1,5 @@
-
-
 ```{r}
-library("ggplot2")
 
-setwd("/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP")
-
-data=read.table(file="/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP/out.hwe",header=T)
-png("/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP/struct_pop.png",res=600,width=6000,height = 3000)
-ggplot(data,aes(x=P_HWE))+geom_histogram(col="black")+theme(axis.line=element_line(size=0.75))+theme_bw()
-ggplot(data,aes(x=P_HET_DEFICIT))+geom_histogram(col="black") +theme(axis.line=element_line(size=0.75))+theme_bw()
-ggplot(data,aes(x=P_HET_EXCESS))+geom_histogram(col="black") +theme(axis.line=element_line(size=0.75))+theme_bw()
-
-data=read.table(file="/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP/Beech_147_complet_23062022.recode.Freq.txt",header=T)
-png("/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP/SNP_freq_histo.png",res=600,width=4000,height = 5000)
-ggplot(data,aes(x=X44))+geom_density(col="black",fill="azure4")+theme(axis.line=element_line(size=0.75))+theme_bw()
-
-data=read.table(file="/home/lgdp/Downloads/Beach_Massane_coverage.tab",header=T)
-png("/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP/coverage_table_147_ind.png",res=600,width=4000,height = 5000)
-ggplot(data,aes(y=cov))+geom_boxplot()+theme(axis.line=element_line(size=0.75))+theme_bw()
-
-
-data=read.table(file="/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP/Beech_147_complet_23062022.recode.NbSNP_perInd.txt")
-mean(data$V2)
-data$V3="ind"
-png("/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP/SNP_per_Ind_violin.png",res=600,width=4000,height = 5000)
-ggplot(data,aes(x=V3,y=V2))+geom_violin(fill="azure4")+theme(axis.line=element_line(size=0.75))+theme_bw()
-
-png("/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP/SNP_per_Ind_barplot.png",res=600,width=8000,height = 4000)
-ggplot(data,aes(x=V1,y=V2))+geom_bar(stat="identity",col="black",fill="azure")+theme(axis.line=element_line(size=0.75))+theme_bw()+  theme(axis.text.x = element_text(angle = 90,size=7.5))
-
-```
-
-
-
-```{r}
-library("ggplot2")
-library("dplyr")
-setwd("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR")
-data=read.table(file="all_LTR_ins_TE_ind.bed")
-
-data1=data %>% group_by(V4,V5) %>% summarise(count=n())
-
-data2 <- data1 %>% group_by(V4) %>%  mutate(mean = mean(count))
-data2=data2[data2$mean>=20,]
-data3=data1[data1$V4 %in% data2$V4,]
-
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/boxplot_TEs_per_ind_per_family.png",res=800,width=18500,height = 7000)
-ggplot(data3,aes(x=V4,y=count)) + geom_boxplot(outlier.size=0.01) +theme_bw() + theme(axis.text.x = element_text(angle = 45, hjust = 1,size=5),axis.text.y = element_text( hjust = 1,size=10),axis.title = element_text(size = 18),axis.line=element_line(size=0.75)) + stat_summary(fun.y=mean, geom="point", shape=8, size=1.5, color="red2", fill="red2") + labs(x= "TE family",y= "Number of insertions")  + scale_y_continuous(breaks = seq(0, 4000, by = 500)) 
-
-
-
-data=data3[,c(2,3)]
-data=data%>% group_by(V5) %>% summarise(Frequency = sum(count))
-
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/Nb_ins_LTR_ind_barplot.png",res=600,width=8000,height = 4000)
-ggplot(data,aes(x=V5,y=Frequency))+geom_bar(stat="identity",col="black",fill="royalblue4")+theme(axis.line=element_line(size=0.75))+theme_bw()+ theme(axis.text.x = element_text(angle = 90,size=7.5))
-
-data$V3="ind"
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/Nb_ins_LTR_ind_violin.png",res=600,width=6000,height = 5000)
-ggplot(data,aes(x=V3,y=Frequency))+geom_violin(col="black",fill="royalblue4")+theme(axis.line=element_line(size=0.75))+theme_bw()
-
-data=read.table(file="/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/LTR_family_windows_matrics_count_TEfam.txt",sep=" ")
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/Nb_TIPs_LTR_fam_bar.png",res=600,width=15000,height = 8000)
-data$V3="ind"
-ggplot(data,aes(x=V1,y=V2))+geom_bar(col="black",fill="royalblue4",stat="identity")+theme_bw()+theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle =90, vjust = 0.5, hjust=1,size=3.5))
-
-
-data=read.table(file="allTIPs_pop.bed")
-data$freq=data$V5/147
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/TIPs_LTR_freq_density.png",res=600,width=10000,height = 5000)
-ggplot(data,aes(x=freq))+geom_histogram(col="black",fill="royalblue4") +theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1))+theme_bw() + scale_x_continuous(breaks = seq(0,1,0.1))
-
-
-##################################################################
 library("ggplot2")
 library("dplyr")
 setwd("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR")
@@ -88,6 +15,7 @@ ggplot(data0,aes(x=reorder(TE,-count),y=count))+geom_bar(col="black",fill="royal
 
 data0$TE=str_replace_all(data0$TE, "LTR", "retrofag")  
 png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/Nb_TIPs_LTR_fam_bar_1.png",width=7000,height = 5000,res=500)
+
 ggplot(data0[data0$count>=1367,],aes(x=reorder(TE,-count),y=count))+ geom_point(size=3, shape=23,fill="black")+theme_bw()+theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle =45, vjust = 1, hjust=1,size=13))
 
 id=paste0(data$TE,"_",data$ins)
@@ -120,31 +48,6 @@ data$V9=data$V9/100
 png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_LTRs_ins_TE_ind2.csv_win_gene_dist.png",res=600,width=15000,height = 8000)
 ggplot(data,aes(x=V9))+geom_density(col="black",fill="royalblue4")+theme_bw()+theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle =90, vjust = 0.5, hjust=1,size=3.5)) + scale_x_continuous(breaks = seq(-2000,3000,100))
 
-data=read.table(file="/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/genes_LTR_tips_count.txt")
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/genes_LTR_tips_count_barplot.png",res=600,width=9000,height = 7000)
-ggplot(data[data$V2>=115,],aes(x=reorder(V1,V2),y=V2))+geom_bar(stat="identity",col="black",fill="royalblue4")+theme_bw()+theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle =45, vjust = 0.5, hjust=1,size=4))  +coord_flip()
-
-data1=read.table(file="/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/genes_MITE_tips_count.txt")
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/genes_MITE_tips_count_barplot.png",res=600,width=9000,height = 7000)
-ggplot(data1[data1$V2>=67,],aes(x=reorder(V1,V2),y=V2))+geom_bar(stat="identity",col="black",fill="purple4")+theme_bw()+theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle =45, vjust = 0.5, hjust=1,size=4)) +coord_flip()
-
-data2=read.table(file="/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP/Fagus_sylvatica_v3.1.annot.simple_nb_SNP.bed")
-png("/media/lgdp/Seagate Basic/P2/Abirami/Abirami/vcf_SNP/genes_SNP_count_barplot.png",res=600,width=9000,height = 7000)
-ggplot(data2[data2$V5>=1352,],aes(x=reorder(V4,V5),y=V5))+geom_bar(stat="identity",col="black",fill="darkorange3")+theme_bw()+theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle =45, vjust = 0.5, hjust=1,size=4)) +coord_flip()
-
-gene=data.frame(unique(c(data$V1,data1$V1)))
-colnames(gene)="V1"
-data=left_join(gene,data,by=c("V1"="V1"))
-data=left_join(data,data1,by=c("V1"="V1"))
-
-library(reshape2) 
-colnames(data)=c("gene","LTR","MITE")
-data1=melt(data,id.vars=c("gene"),measure.vars=c("LTR","MITE"))
-
-
-
-
-
 
 
 setwd("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE")
@@ -168,42 +71,6 @@ data0=data0[,-c(1)]
 
 png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/Nb_TIPs_MITE_fam_bar.png",res=600,width=15000,height = 8000)
 ggplot(data0,aes(x=reorder(V2,-count),y=count))+geom_bar(col="black",fill="purple4",stat="identity")+theme_bw()+theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle =45,size=3.5,vjust = 1, hjust=1))
-
-
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/Nb_TIPs_MITE_fam_bar_1.png",width=7000,height = 5000,res=500)
-ggplot(data0[data0$count>=1442,],aes(x=reorder(V2,-count),y=count))+ geom_point(size=3, shape=23,fill="black")+theme_bw()+theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle =45, vjust = 1, hjust=1,size=13))
-
-
-id=paste0(data$TE,"_",data$ins)
-rownames(data)=id
-data=data[,-c(1,2)]
-data1=data.frame(colSums(data)) 
-data1$ind=row.names(data1)
-colnames(data1)=c("nb","ind")
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/Nb_ins_MITE_ind_barplot.png",res=600,width=8000,height = 4000)
-ggplot(data1,aes(x=ind,y=nb))+geom_bar(stat="identity",col="black",fill="purple4")+theme(axis.line=element_line(size=0.75))+theme_bw()+ theme(axis.text.x = element_text(angle = 90,size=7.5))
-
-data1$V3="ind"
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/Nb_ins_MITE_ind_violin.png",res=600,width=6000,height = 5000)
-ggplot(data1,aes(x=V3,y=nb))+geom_violin(col="black",fill="purple4")+theme(axis.line=element_line(size=0.75))+theme_bw()
-
-data1=data.frame(rowSums(data)) 
-data1$ind=row.names(data1)
-colnames(data1)=c("freq","win")
-data1$freq=data1$freq/147
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/Nb_ins_MITE_freq_density.png",res=600,width=8000,height = 4000)
-ggplot(data1,aes(x=freq))+geom_density(col="black",fill="purple4")+theme(axis.line=element_line(size=0.75))+theme_bw()+ theme(axis.text.x = element_text(angle = 90,size=7.5))
-
-data=read.table(file="/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/all_MITEs_ins_TE_ind2.csv_win_genes.bed")
-data$win=paste0(data$V5,"_",data$V6,"_",data$V7,"_",data$V8)
-data=data[,c(10,9)]
-data$V9=data$V9/100
-library(ggplot2)
-png("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/all_MITEs_ins_TE_ind2.csv_win_gene_dist.png",res=600,width=15000,height = 8000)
-ggplot(data,aes(x=V9))+geom_density(col="black",fill="purple4")+theme_bw()+theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle =90, vjust = 0.5, hjust=1,size=3.5))  + scale_x_continuous(breaks = seq(-3100,3700,100))
-
-
-
 
 ```
 
