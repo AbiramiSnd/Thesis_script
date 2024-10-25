@@ -13,5 +13,6 @@ R CMD BATCH "--args $path $snp_vcf " /home/lgdp/Desktop/GWAS_plink/rmvp_pop-stru
 
 mkdir $out  
 cd $out
-echo $out
+
+# Run gwas
 R CMD BATCH "--args $path/$out $vcf $pheno $path/mvp.SNP.vcf $out $path" /home/lgdp/Desktop/GWAS_plink/rmvp_GWAS.R 
