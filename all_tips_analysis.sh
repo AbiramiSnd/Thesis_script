@@ -1,28 +1,43 @@
-grep "Fsyl" matrice_final_LTR*.csv   |  sed -e 's/,/\t/g' | sed 's/NA/0/g' | sed -e 's/\t2/\t1/g' | sed 's/matrice_final_//g' | sed 's/.csv:/\t/g' > ../all_matrice_final_LTR.interval-TE.bed
+grep ""  LTR*/*final*/*csv | head -1  | sed 's/,/\t/g' | sed 's/LTR100\/final_cov2_LTR100\/matrice_final_LTR100.csv:/TE\tins/g' > all_LTRs_header.txt
+grep ""  LTR*/*final*/*csv | grep "Fsyl" | sed 's/,/\t/g' | sed 's/matrice_final_/\t/g' | sed 's/.csv:/\t/g'  | cut -f2- | sed 's/NA/0/g' | sed 's/\t2/\t1/g' > all_LTRs_ins_TE_ind.csv.bed
+cat all_LTRs_header.txt all_LTRs_ins_TE_ind.csv.bed  > all_LTRs_ins_TE_ind2.csv.bed
 
-cat used_matrix2/matrice_final_LTR*.csv | grep "^Fsyl" | sed 's/,/\t/g' | awk -v OFS="\t" '{print $1}' | sed 's/_/\t/g' | awk -v OFS="\t" '{print $1"_"$2"_"$3,$4,$5}' | sort | uniq | bedtools sort >  all_matrice_final_LTR.interval.pos.bed
-awk -v OFS="\t" '{print $2,$1}' all_matrice_final_LTR.interval-TE.bed |  sed 's/_/\t/g' | awk -v OFS="\t" '{print $1"_"$2"_"$3,$4,$5,$6}' |  sort | uniq | bedtools sort > all_matrice_final_LTR.interval.pos_TE.bed
+awk -v OFS="\t" '{print $2,$1}'  all_LTRs_ins_TE_ind2.csv.bed | sed 's/\(Fsylvatica_scaffold_[0-9]*\)_\([0-9]*\)_\([0-9]*\)/\1\t\2\t\3/g' | grep -v "TE" | bedtools sort > all_LTRs_ins_TE_ind2.csv_win.bed
 
+awk -v OFS="\t" '{print $2,$1}'  all_LTRs_ins_TE_ind2.csv.bed | sed 's/\(Fsylvatica_scaffold_[0-9]*\)_\([0-9]*\)_\([0-9]*\)/\1\t\2\t\3/g' | grep -v "TE" | awk -v OFS="\t" '{count[$1"\t"$2"\t"$3]++} END {for (word in count) print word, count[word]}' | bedtools sort > all_LTRs_ins_TE_ind2.csv_count_fam.bed
 
-bedtools closest -a all_matrice_final_LTR.interval.pos.bed -b '/home/lgdp/Desktop/distribution_sv/Fagus_Sylvatica_gene_annot_fn2.bed' -wa -wb -D "a" | sort | uniq > all_matrice_final_LTR.interval.pos-gene_dist.bed
+bedtools intersect -a all_LTRs_ins_TE_ind2.csv_count_fam.bed -b '/home/lgdp/Desktop/dup_genes/Fagus_sylvatica_v3.1.annot.simple.bed' -wa -wb | awk -v OFS="\t" '{print $1,$2,$3,$4,$8}' > all_LTRs_ins_TE_ind2.csv_count_fam_genes.bed
 
-
-bedtools makewindows -g '/media/lgdp/TOSHIBA/Données_Fagus_sylvatica/Fagus_sylvatica_v3.30Scaff.length'  -w 100000 > Fagus_sylvatica_v3.30Scaff.length.100kb.bed
-
-bedtools intersect -a Fagus_sylvatica_v3.30Scaff.length.100kb.bed -b all_matrice_final_LTR.interval.pos.bed -wa -wb | awk -v OFS="\t" '{count[$1"\t"$2"\t"$3]++} END {for (word in count) print word, count[word]}' > all_matrice_final_LTR.interval.pos_100kb_count_TIPs_without_TE.bed
-
-bedtools intersect -a Fagus_sylvatica_v3.30Scaff.length.100kb.bed -b all_matrice_final_LTR.interval.pos_TE.bed -wa -wb | awk -v OFS="\t" '{count[$1"\t"$2"\t"$3]++} END {for (word in count) print word, count[word]}' > all_matrice_final_LTR.interval.pos_100kb_count_TIPs_with_TE.bed
-
-bedtools intersect -a "/media/lgdp/Seagate Basic/P2/Abirami/BA2_mobilome/hotspot_TIPs_log2_filt6.bed"  -b '/home/lgdp/Desktop/GWAS_plink/all_matrice_final_LTR.interval.pos_TE.bed'  -wa -wb | bedtools groupby -g 1,2,3,4 -c 8,8 -o count_distinct,distinct > hotspot_TIPs_log2_filt6_TE_family.bed
-bedtools intersect -a hotspot_TIPs_log2_filt6.bed -b '/home/lgdp/Desktop/distribution_sv/Fagus_Sylvatica_gene_annot_fn2.bed' -wa -wb > hotspot_TIPs_log2_filt6-gene_annot.bed
-
-cat *.bed | bedtools sort | bedtools groupby -g 1,2,3 -c 4 -o mean  > all_trees_cov.100kb.regions.mean.bed
+bedtools closest -a '/home/lgdp/Desktop/dup_genes/Fagus_sylvatica_v3.1.annot.simple.bed' -b all_LTRs_ins_TE_ind2.csv_win.bed -wa -wb -D "b" > all_LTRs_ins_TE_ind2.csv_win_genes.bed
 
 
- sort  -k1,2n '/home/lgdp/Desktop/GWAS_plink/all_matrice_final_LTR.interval.pos_TE.bed' | bedtools groupby -g 1,2,3 -c 4,4 -o distinct,count   > all_matrice_final_LTR.interval.pos_TE.concat_TEfam.bed
 
-bedtools intersect  -a '/home/lgdp/Desktop/GWAS_plink/Fagus_sylvatica_v3.30Scaff.length.100kb.bed' -b /home/lgdp/Desktop/GWAS_plink/all_matrice_final_LTR.interval.pos_TE.bed -wa -wb | bedtools groupby -g 1,2,3 -c 7 -o count_distinct > '/home/lgdp/Desktop/GWAS_plink/all_matrice_final_LTR.interval.pos_TE.concat_TEfam_distinct.100kb.bed'
+grep ""  */*final*/*csv | head -1  | sed 's/,/\t/g' | sed 's/Cluster10\/final_cov2_Cluster10\/matrice_final_Cluster10.csv:/TE\tins/g' > all_MITEs_header.txt
+grep ""  */*final*/*csv | grep "Fsylvatica" | sed 's/,/\t/g' | sed 's/matrice_final_/\t/g' | sed 's/.csv:/\t/g'  | cut -f2- | sed 's/NA/0/g' | sed 's/\t2/\t1/g' > all_MITEs_ins_TE_ind.csv.bed
+cat all_MITEs_header.txt all_MITEs_ins_TE_ind.csv.bed  > all_MITEs_ins_TE_ind2.csv.bed
 
-awk -v OFS="\t" '($2-2000>=0) {print $1,$2-2000,$3+2000,$4} ($2-2000<0) {print $1,0,$3+2000,$4}' '/home/lgdp/Desktop/distribution_sv/Fagus_Sylvatica_gene_annot_fn2.bed' > Fagus_Sylvatica_gene_annot_2kb.bed
+awk -v OFS="\t" '{print $2,$1}'  all_MITEs_ins_TE_ind2.csv.bed | sed 's/\(Fsylvatica_scaffold_[0-9]*\)_\([0-9]*\)_\([0-9]*\)/\1\t\2\t\3/g' | grep -v "TE" | bedtools sort > all_MITEs_ins_TE_ind2.csv_win.bed
+bedtools closest -a '/home/lgdp/Desktop/dup_genes/Fagus_sylvatica_v3.1.annot.simple.bed' -b all_MITEs_ins_TE_ind2.csv_win.bed -wa -wb -D "b" > all_MITEs_ins_TE_ind2.csv_win_genes.bed
 
-bedtools intersect -a Fagus_Sylvatica_gene_annot_2kb.bed -b '/home/lgdp/Desktop/GWAS_plink/all_matrice_final_LTR.interval.pos_TE.bed' -wa -wb | awk '{count[$1"\t"$2"\t"$3"\t"$4"\t"$5]++} END {for (word in count) print word, count[word]}' | sort -k4n > Fagus_Sylvatica_gene_annot_2kb_tips_count.bed
+cat '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_LTRs_ins_TE_ind2.csv_win.bed' '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/all_MITEs_ins_TE_ind2.csv_win.bed' | bedtools sort > '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_LTRs_MITEs_ins_TE_ind2.csv_win.bed
+
+grep -e "Fsylvatica_scaffold_[0-9]   " -e "Fsylvatica_scaffold_[1|2][0-9]    "  -e "Fsylvatica_scaffold_30   " /home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/100kb_no_LTRs_MITEs_ins_TE_ind2.csv_win_nocov.bed > /home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/100kb_no_LTRs_MITEs_ins_TE_ind2.csv_win_nocov_30scaff.bed
+
+
+bedtools intersect -a '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_LTRs_ins_TE_ind2.csv_win.bed'  -b all_LTRs_ins_TE_ind2.csv_win_grp_remove.bed  -v > all_LTRs_ins_TE_ind2.csv_win2.bed
+ bedtools intersect -a '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_LTRs_ins_TE_ind2.csv_win.bed'  -b all_LTRs_ins_TE_ind2.csv_win_grp_remove.bed  -v | awk '{print $1"_"$2"_"$3}' > all_LTRs_ins_TE_ind2.csv_win_removed.txt
+grep -f all_LTRs_ins_TE_ind2.csv_win_removed.txt '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_LTRs_ins_TE_ind2.csv.bed' > /home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_LTRs_ins_TE_ind2.csv2.bed
+
+bedtools intersect -a '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/all_MITEs_ins_TE_ind2.csv_win.bed'  -b all_MITEs_ins_TE_ind2.csv_win_grp_remove.bed  -v > all_MITEs_ins_TE_ind2.csv_win2.bed
+ bedtools intersect -a '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/all_MITEs_ins_TE_ind2.csv_win.bed'  -b all_MITEs_ins_TE_ind2.csv_win_grp_remove.bed  -v | awk '{print $1"_"$2"_"$3}' > all_MITEs_ins_TE_ind2.csv_win_removed.txt
+grep -f all_MITEs_ins_TE_ind2.csv_win_removed.txt '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/all_MITEs_ins_TE_ind2.csv.bed' > /home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_MITEs_ins_TE_ind2.csv2.bed
+
+bedtools intersect -a '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_LTRs_ins_TE_ind2.csv_win.bed'  -b all_LTRs_ins_TE_ind2.csv_win_grp_remove.bed  -v | awk '{print $1"_"$2"_"$3}' | sort | uniq  > all_LTRs_ins_TE_ind2.csv_win_removed.txt
+grep -f all_LTRs_ins_TE_ind2.csv_win_removed.txt '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_LTRs_ins_TE_ind2.csv.bed' > /home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_LTRs_ins_TE_ind2.csv2.bed
+
+bedtools intersect -a '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/all_MITEs_ins_TE_ind2.csv_win.bed'  -b all_MITEs_ins_TE_ind2.csv_win_grp_remove.bed  -v | awk '{print $1"_"$2"_"$3}' | sort | uniq > all_MITEs_ins_TE_ind2.csv_win_removed.txt
+grep -f all_MITEs_ins_TE_ind2.csv_win_removed.txt '/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/all_MITEs_ins_TE_ind2.csv.bed' > /home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test2/LTR/all_MITEs_ins_TE_ind2.csv2.bed
+
+
+bedtools intersect -a all_LTR_ins_TE_ind.bed -b all_LTRs_ins_TE_ind2.csv_win_grp_remove.bed  -v > all_LTR_ins_TE_ind_removed_filt.bed
+awk -v OFS="\t" '{print $1,$2,$3,$5,$4}' ../../TRACKPOSON_test3/MITE/MITE_nb_copies_per_ind_per_TE_int.txt > all_MITE_ins_TE_ind.bed
