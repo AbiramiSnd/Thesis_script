@@ -2,7 +2,7 @@
 
 
 ```{r}
-# The aim of this script is to describe squirrel1 and squirrel2 abundance in ONT eccDNA samples
+# The aim of this script is to describe squirrel1 abundance in ONT eccDNA samples
 
 # Load libraries
 library(ggplot2)
@@ -38,6 +38,8 @@ ggplot(data[order(data$forest,data$stage),],aes(x=ind,y=log10(norm),fill=stage))
 
 
 ```{r}
+# The aim of this script is to describe squirrel2 abundance in ONT eccDNA samples
+
 # Format dataframe with individuals, library size of samples, number of reads mapping to squirrel2, tissue and forest
 ind=c("194MR","216MR","185M","354M","525M","525R","216M","216R","BA20_1","CC9_1","V25_1","BD18_1","BV15","GE1","H8007","BA20_2","BD18_2","V25_2","CC9_2")
 rd=c(550,178,482,17,49,4,53,14,70,370,252,455,13,362,194,115,37,124,0)
@@ -69,6 +71,8 @@ ggplot(data[order(data$forest,data$stage),],aes(x=ind,y=log10(norm),fill=stage))
 
 
 ```{r}
+# The aim of this script is to plot gene distance and copysize of squirrel1 copies
+
 # Load data
 data=read.table(file="/home/lgdp/Desktop/FsylCur4_last_annotation_data/Cluster59_e-50_d50_gene_dist.bed")
 
@@ -91,6 +95,8 @@ ggplot(data,aes(x=size))+geom_density(fill="royalblue4",col="black",size=0.8) + 
 
 
 ```{r}
+# The aim of this script is to plot gene distance and copysize of squirrel2 copies
+
 # Load data
 data=read.table(file="/home/lgdp/Desktop/FsylCur4_last_annotation_data/Cluster1564_e-50_d50_gene_dist.bed")
 
