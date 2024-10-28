@@ -1,3 +1,4 @@
+# The aim of this script is to launch estimation of local coverage on all individuals
 #!/bin/bash
 
 #PBS -N bedmap_bam    
