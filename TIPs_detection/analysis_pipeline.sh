@@ -30,4 +30,4 @@ wc -l all_position_cov5_$te.names
 for file in $path/$out/*.fa_per*kb.bed ;do n=$(echo $file | sed -e "s/coveragebed_//"  | sed -e "s/-vs-[A-Z0-9_]*.fa_per*kb.bed//"); awk -F "\t" '{print $1"_"$2"_"$3}' $file > $n.txt;done
 
 echo $csv_tip
-R CMD BATCH "--args $te $path/$out /final_cov2_$te  $csv_tip" $path/../Analyse_pipeline.R
+R CMD BATCH "--args $te $path/$out /final_cov2_$te  $csv_tip" $path/../analyse_pipeline.R
