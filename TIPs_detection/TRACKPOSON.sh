@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -N mite1_trackposon     
+#PBS -N trackposon     
 #PBS -l nodes=1:ppn=6   
 #PBS -q long            
 #PBS -M abirami.soundiramourtty@univ-perp.fr  
