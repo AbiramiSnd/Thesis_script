@@ -1,7 +1,7 @@
 ## Overview
 This folder contains the major scripts used in my thesis titled : 
 Exploring the transpositional landscape and recent transposable element activity in beech trees using long read mobilome and genome sequencing  and with new computational tools
-The thesis is funded by the ED305 doctoral school of Perpignan University, in France.
+My PhD was conducted in the LGDP lab and wad funded by the ED305 doctoral school of Perpignan University, in France.
 
 ## Usage
 The shell script are launch as : ./script.sh
@@ -54,4 +54,4 @@ Here is the detailed organisation of the folders and scripts.
 
 ## Notes
 The script have been updated on 28th october and will not be modified untill 6th december. 
-These programs are still under developpemnt to build a robust tool in the future.
+These programs are still under developpemnt to build a robust integrative tool in the future.
