@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -N bedmap_bam    
+#PBS -N coverage    
 #PBS -l nodes=1:ppn=6   
 #PBS -q long            
 #PBS -M abirami.soundiramourtty@univ-perp.fr  
@@ -12,13 +12,11 @@ source ~/.bashrc
 module load mosdepth/0.3.3
 
 # Variables
-
 FQ1=$file
 FQ2=$(echo $file | sed -e "s/_1/_2/")
 out=$(basename $file | awk -F "_" '{print $2}')
-
 DIR=/home/abirami/MASSANE
-bed=/home/abirami/MASSANE/all_500ltr_activeTE_ins.bed
+bed=/home/abirami/MASSANE/all_LTR_ins.bed
 bam=/home/database/Beech_genomes/Massane/MAPPING_v3/BWA/$out-vs-Fagus_sylvatica_v3.sort.bam
 
 # Work in local
@@ -29,7 +27,7 @@ cd  /scratch/TRACKPOSON-$out
 cp $bed .
 ref=$(basename $bed)
 
-# Total read coverage by windows
+# Total read coverage by all windows containing TIPs
 mosdepth --no-per-base --use-median --by $bed $out-all_10kb.cov $bam
 zcat $out-all_10kb.cov.regions.bed.gz > $out-all_10kb.cov.regions.bed
 
