@@ -9,7 +9,7 @@
 #PBS -m e          
 
     
-#load tools
+# Load tools
 module load bowtie2/2.4.4
 module load ncbi-blast+/2.12.0
 module load samtools/1.13
@@ -18,7 +18,7 @@ module load mosdepth
 
 source ~/.bashrc
 
-# Variables
+# Define variables
 FQ1=$file
 FQ2=$(echo $file | sed -e "s/_1/_2/")
 out=$(basename $file | awk -F "_" '{print $2}')
