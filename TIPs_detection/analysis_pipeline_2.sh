@@ -1,7 +1,4 @@
-#####
-# Automatic analysis of TRACKPOSON output
-#####
-
+# The aim of this script is analyse TRACKPOSON bedfile outputs to generate a csv numerical matrix per TE family with individuals as columns and windows as rows.
 #!/usr/bin/bash
 
 
