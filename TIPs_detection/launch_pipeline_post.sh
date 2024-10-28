@@ -20,5 +20,5 @@ R CMD BATCH "--args $all_tips $path/all_position_TIPs_cov.names $all_tips_file "
 
 for i in $te
 do
-~/Desktop/TRACKPOSON_test/TRACKPOSON_test2/Analyse_pipeline.sh ${i/\//} $path $path/../all_position_TIPs_cov.names $path/$all_tips_file
+~/Desktop/TRACKPOSON_test/TRACKPOSON_test2/analyse_pipeline.sh ${i/\//} $path $path/../all_position_TIPs_cov.names $path/$all_tips_file
 done
