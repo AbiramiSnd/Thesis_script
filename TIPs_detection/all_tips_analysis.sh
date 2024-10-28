@@ -1,4 +1,4 @@
-# The aim of this script is to concatenate all matrices and find position of TIPs and number of families involves.
+# The aim of this script is to concatenate all LTR and MITE matrices and find position of TIPs and number of families involves.
 
 # Select header of file with individual names for LTR TIPs
 grep ""  LTR*/*final*/*csv | head -1  | sed 's/,/\t/g' | sed 's/LTR100\/final_cov2_LTR100\/matrice_final_LTR100.csv:/TE\tins/g' > all_LTRs_header.txt
