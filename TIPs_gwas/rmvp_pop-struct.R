@@ -1,3 +1,4 @@
+# The aim of this script is to calculate population structure
 
 library(devtools)
 library(rMVP)
