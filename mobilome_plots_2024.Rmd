@@ -1,0 +1,111 @@
+
+
+
+```{r}
+# Load libraries
+library(ggplot2)
+library(tidyverse)
+library(ggpattern)
+
+# Format dataframe with individuals, library size of samples, number of reads mapping to squirrel1, tissue and forest
+ind=c("194MR","216MR","185M","354M","525M","525R","216M","216R","BA20_1","CC9_1","V25_1","BD18_1","BV15","GE1","H8007","BA20_2","BD18_2","V25_2","CC9_2")
+rd=c(18732,1572,657,4755,238,22,85,29,110,500,290,618,30,405,298,194,67,175,0)
+lib=c(0.215872,0.190463,0.759311,0.599277,0.372519,0.272462,0.053927,0.138765,0.793042,0.611088,0.695400,0.022979,0.715171,0.392087,0.410388,0.190322,0.323116,0.233342)
+stage=c("bud","bud","bud","bud","bud","bud","leaf","leaf","leaf","leaf","leaf","leaf","leaf","leaf","bud","bud","bud","bud","bud")
+forest=c("verzy","verzy","verzy","verzy","verzy","verzy","verzy","verzy","massane","massane","massane","massane","massane","massane","massane","massane","massane","massane","massane")
+
+data=data.frame(cbind(ind,rd,lib,stage,forest))
+data$rd=as.numeric(data$rd)
+data$lib=as.numeric(data$lib)
+data=data[c(1:6,15:19,7:14),]
+data$norm=data$rd/data$lib
+data$ind<- factor(data$ind, levels = data$ind)
+
+# Plot barplot of eccDNA abundance of reads mapping to squirrel1 in log10 in the samples, with tissue and forest indications
+png("/media/lgdp/Seagate Basic/P2/Abirami/BA2_mobilome/mobilome_barplot_squirrel1.png",res=600,width=8000,height = 4000)
+ggplot(data[order(data$forest,data$stage),],aes(x=ind,y=log10(norm),fill=stage)) + geom_bar(col="black",stat="identity",orientation = "x",col="black",size=1.4) +  scale_fill_manual(values = c("yellow4","saddlebrown"))+
+  scale_pattern_manual(values = c( "stripe","none")) +
+  geom_col_pattern(
+    aes(pattern = forest),
+    position = "dodge",
+    pattern_angle = 45,
+    pattern_density = 0.05,
+    pattern_spacing = 0.03) + scale_y_continuous(breaks=seq(0,6,2),limits=c(0,6)) + theme_classic() + theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle = 45, vjust = 0.5, size=9))
+
+```
+
+
+```{r}
+# Format dataframe with individuals, library size of samples, number of reads mapping to squirrel2, tissue and forest
+ind=c("194MR","216MR","185M","354M","525M","525R","216M","216R","BA20_1","CC9_1","V25_1","BD18_1","BV15","GE1","H8007","BA20_2","BD18_2","V25_2","CC9_2")
+rd=c(550,178,482,17,49,4,53,14,70,370,252,455,13,362,194,115,37,124,0)
+lib=c(0.215872,0.190463,0.759311,0.599277,0.372519,0.272462,0.053927,0.138765,0.793042,0.611088,0.695400,0.022979,0.715171,0.392087,0.410388,0.190322,0.323116,0.233342)
+stage=c("bud","bud","bud","bud","bud","bud","leaf","leaf","leaf","leaf","leaf","leaf","leaf","leaf","bud","bud","bud","bud","bud")
+forest=c("verzy","verzy","verzy","verzy","verzy","verzy","verzy","verzy","massane","massane","massane","massane","massane","massane","massane","massane","massane","massane","massane")
+
+data=data.frame(cbind(ind,rd,lib,stage,forest))
+data$rd=as.numeric(data$rd)
+data$lib=as.numeric(data$lib)
+data=data[c(1:6,15:19,7:14),]
+data$norm=data$rd/data$lib
+data$ind<- factor(data$ind, levels = data$ind)
+
+# Plot barplot of eccDNA abundance of reads mapping to squirrel2 in log10 in the samples, with tissue and forest indications
+png("/media/lgdp/Seagate Basic/P2/Abirami/BA2_mobilome/mobilome_barplot_squirrel2.png",res=600,width=8000,height = 4000)
+ggplot(data[order(data$forest,data$stage),],aes(x=ind,y=log10(norm),fill=stage)) + geom_bar(col="black",stat="identity",orientation = "x",col="black",size=1.4) +  scale_fill_manual(values = c("yellow4","saddlebrown"))+
+  scale_pattern_manual(values = c( "stripe","none")) +
+  geom_col_pattern(
+    aes(pattern = forest),
+    position = "dodge",
+    pattern_angle = 45,                                                                                              pattern_density = 0.05,
+    pattern_spacing = 0.03) + scale_y_continuous(breaks=seq(0,6,2),limits=c(0,6)) + theme_classic() + theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle = 45, vjust = 0.5, size=9))
+
+```
+
+
+
+
+
+```{r}
+# Load data
+data=read.table(file="/home/lgdp/Desktop/FsylCur4_last_annotation_data/Cluster59_e-50_d50_gene_dist.bed")
+
+# Plot distribution of the distance to the closest gene of copies
+png("/media/lgdp/Seagate Basic/P2/Mobilome_LR_2024/mobilome_sprite1/sprite1_gene_dist_full.png",res=600,width=8000,height = 4000)
+ggplot(data,aes(x=V4))+ geom_density(fill="darksalmon",col="black",size=0.8) + theme_classic()  + theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_continuous(breaks=seq(-45000,80000,5000),limits=c(-45000,80000))  
+
+# Plot distribution of the distance to the closest gene of copies within 2kb distance
+png("/media/lgdp/Seagate Basic/P2/Mobilome_LR_2024/mobilome_sprite1/sprite1_gene_dist_2kb.png",res=600,width=8000,height = 4000)
+#ggplot(data,aes(x=V4))+geom_density(fill="deeppink3",size=0.8,aes(y=after_stat(count))) + theme_classic() 
+#data$V4=data$V4/1000
+ggplot(data,aes(x=V4))+ geom_density(fill="darksalmon",col="black",size=0.8) + theme_classic()  + theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_continuous(breaks=seq(-2000,2000,200),limits=c(-2000,2000))  
+
+# Plot distribution of the size of copies
+png("/media/lgdp/Seagate Basic/P2/Mobilome_LR_2024/mobilome_sprite1/sprite1_copysize.png",res=600,width=8000,height = 4000)
+data$size=data$V3-data$V2
+ggplot(data,aes(x=size))+geom_density(fill="royalblue4",col="black",size=0.8) + theme_classic() + theme(axis.line=element_line(size=0.75)) + scale_x_continuous(breaks=seq(0,900,100),limits=c(0,900))  
+
+```
+
+
+```{r}
+# Load data
+data=read.table(file="/home/lgdp/Desktop/FsylCur4_last_annotation_data/Cluster1564_e-50_d50_gene_dist.bed")
+
+# Plot distribution of the distance to the closest gene of copies
+png("/media/lgdp/Seagate Basic/P2/Mobilome_LR_2024/sprite2_gene_dist_full.png",res=600,width=8000,height = 4000)
+ggplot(data,aes(x=V4))+   geom_density(fill="darksalmon",col="black",size=0.8)    + theme_classic() + theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_continuous(breaks=seq(-110000,320000,20000),limits=c(-110000,320000))
+
+# Plot distribution of the distance to the closest gene of copies within 2kb distance
+png("/media/lgdp/Seagate Basic/P2/Mobilome_LR_2024/sprite2_gene_dist_2kb.png",res=600,width=8000,height = 4000)
+ggplot(data,aes(x=V4))+ geom_density(fill="darksalmon",col="black",size=0.8) + theme_classic()  + theme(axis.line=element_line(size=0.75),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_x_continuous(breaks=seq(-2000,2000,200),limits=c(-2000,2000))  
+
+# Plot distribution of the size of copies
+png("/media/lgdp/Seagate Basic/P2/Mobilome_LR_2024/sprite2_copysize.png",res=600,width=8000,height = 4000)
+data$size=data$V3-data$V2
+ggplot(data,aes(x=size))+geom_density(fill="royalblue4",col="black",size=0.8) + theme_classic() + theme(axis.line=element_line(size=0.75)) + scale_x_continuous(breaks=seq(0,400,100),limits=c(0,400))  
+
+```
+
+
+
