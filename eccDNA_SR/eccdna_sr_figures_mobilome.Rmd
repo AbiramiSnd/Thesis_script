@@ -1,4 +1,6 @@
 ```{r}
+# The aim of this script is to describe TE driven eccDNA in Illumina mobilome sample
+
 # Load librairies 
 library(stringr)
 library(ggplot2)
