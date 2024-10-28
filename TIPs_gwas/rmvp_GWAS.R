@@ -1,9 +1,10 @@
+# The aim of this script is to Run GWAS using a TIPs matrix and phenology database using FarmCPU and LMM model.
+
 library(devtools)
 library(rMVP)
 library(dplyr)
 library(stringr)
 library(tidyverse)
-
 
 args <- commandArgs(trailingOnly = TRUE)
 setwd(args[1])
@@ -43,7 +44,6 @@ write.table(map,"TE.map",quote=F,sep="\t",col.names = T,row.names = T)
 # Read phenotype database
 phenotype=read.table(file =args[3] ,sep="\t",header=T,row.names = 1)
 
-out_matrix
 # Reformat matrix as mvp numerical matrix
 MVP.Data(fileNum=out_matrix,
          filePhe=args[3],
