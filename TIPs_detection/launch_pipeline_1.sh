@@ -1,3 +1,5 @@
+# The aim of this script is to loop analysis of TRACKPOSON outputs on all TEs at once
+
 #!/usr/bin/bash
 
 # Output folder
