@@ -5,5 +5,5 @@ list_file=$(ls /home/database/Beech_genomes/Massane/RAWDATA/*1_H2VCTDSXY*)
 
 for file in $list_file
 do
-qsub -v file=$file /home/abirami/MASSANE/cov.sh
+qsub -v file=$file /home/abirami/MASSANE/local_windows_coverage.sh
 done
