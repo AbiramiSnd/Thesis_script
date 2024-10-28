@@ -8,11 +8,11 @@
 #PBS -m e          
 
     
-# load tools
+# Load tools
 source ~/.bashrc
 module load mosdepth/0.3.3
 
-# Variables
+# Define variables
 FQ1=$file
 FQ2=$(echo $file | sed -e "s/_1/_2/")
 out=$(basename $file | awk -F "_" '{print $2}')
@@ -24,7 +24,7 @@ bam=/home/database/Beech_genomes/Massane/MAPPING_v3/BWA/$out-vs-Fagus_sylvatica_
 mkdir /scratch/TRACKPOSON-$out
 cd  /scratch/TRACKPOSON-$out
 
-# Copy data in local directecoty
+# Copy data in local directory
 cp $bed .
 ref=$(basename $bed)
 
