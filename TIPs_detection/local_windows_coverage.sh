@@ -1,3 +1,4 @@
+# The aim of this script is to calculate coverage of all insertions containing windows to calculate heterozygoty score reflecting allelic frequency.
 #!/bin/bash
 
 #PBS -N coverage    
