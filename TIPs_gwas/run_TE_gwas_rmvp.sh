@@ -16,4 +16,4 @@ mkdir $out
 cd $out
 
 # Run gwas
-R CMD BATCH "--args $path/$out $vcf $pheno $path/mvp.SNP.vcf $out $path" /home/lgdp/Desktop/GWAS_plink/rmvp_GWAS.R 
+R CMD BATCH "--args $path/$out $vcf $pheno $path/mvp.SNP.vcf $out $path" /home/lgdp/Desktop/GWAS_plink/rmvp_gwas.R 
