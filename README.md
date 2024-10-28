@@ -13,7 +13,7 @@ Exploring the transpositional landscape and recent transposable element activity
 
 
 **eccDNA_LR/**\
-> ├ eccdna_lr_analysis.sh     # eccDNA peaks calling (using total read coverage and repetitive read coverage) and intersection with TE annotation using eccDNA ONT samples (Fig 1C.)\
+> ├ eccdna_lr_analysis.sh     # eccDNA peaks calling (using total read coverage and repetitive read coverage) and intersection with TE annotation using eccDNA ONT samples (Fig 1C.)
 > > ├ repeats_mobilome0.py    # Find reads containing repetitive units (Fig 1C.)\
 > ├ eccdna_lr_figures_mobilome.Rmd    # Plot eccDNA heatmap, PCA and barplot of abundant TEs in samples (Fig 1BDE.)\
 > ├ squirrel1_2_figures_mobilome.Rmd    # Barlot of squirrel1 and squirrel2 abundance in samples, histogram of copy size and distance to closest gene distribution (Fig 3AFG.)
@@ -25,6 +25,6 @@ Exploring the transpositional landscape and recent transposable element activity
 
 
 **TIPs_detection/**\
-> ├ eccdna_lr_analysis.sh     # eccDNA peaks calling (using total read coverage and repetitive read coverage) and intersection with TE annotation using eccDNA ONT samples (Fig 1C.)\
+> ├ eccdna_lr_analysis.sh     # eccDNA peaks calling (using total read coverage and repetitive read coverage) and intersection with TE annotation using eccDNA ONT samples (Fig 1C.)
 > > ├ repeats_mobilome0.py    # Find reads containing repetitive units (Fig 1C.)\
 > ├ eccdna_lr_figures_mobilome.Rmd    # Plot eccDNA heatmap, PCA and barplot of abundant TEs in samples (Fig 1BDE.)
