@@ -1,16 +1,14 @@
-#####
-# Automatic analysis of TRACKPOSON output
-#Create final matrix 
-#####
+# Tha aim of this script is to generate numerical coverage matrix of all windows as rows and individual as columns
+# Load libraries
 library(pheatmap)
 library(tidyverse)
 #warning eliminations
 options(warn=-1)
 
-#arguments retrieve
+# Retrive arguments
 args <- commandArgs(trailingOnly = TRUE)
 
-#TE family name
+# TE family name
 files<-as.character(args[1])
 args[0]
 args[1]
