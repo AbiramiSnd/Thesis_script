@@ -7,7 +7,7 @@ Exploring the transpositional landscape and recent transposable element activity
 
 
 
-**eccDNA_SR/**\\
+**eccDNA_SR/**\
 >    ├ eccdna_sr_analysis.sh     # eccDNA peaks calling (using total read coverage and split read and disordant read coverage) and intersection with TE annotation using eccDNA Illumina samples\
 >    ├ eccdna_sr_figures_mobilome.Rmd    # Plot eccDNA heatmap
 
@@ -21,7 +21,7 @@ Exploring the transpositional landscape and recent transposable element activity
 
 **Somatic_SV_detection/**\
     ├ filter_reads.sh     # Filtering ONT WGS reads of #354M and #354R (Fig 2A)\
-    ├ somatic_sv_detection.sh   # Structurant variant calling using ONT WGS reads of #354M and #354R (Fig 2A)\
+    ├ somatic_sv_detection.sh   # Structurant variant calling using ONT WGS reads of #354M and #354R (Fig 2A)
 
 
 **TIPs_detection/**\
