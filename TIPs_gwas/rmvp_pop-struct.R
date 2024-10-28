@@ -8,7 +8,7 @@ args <- commandArgs(trailingOnly = TRUE)
 
 setwd(args[1])
 
-### read vcf and generate vcf for population structure
+# Read vcf and generate vcf for population structure
 MVP.Data(fileVCF=args[2],
          fileKin=FALSE,
          filePC=FALSE,
