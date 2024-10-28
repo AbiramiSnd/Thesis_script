@@ -1,3 +1,4 @@
+# The aim of this script is to launch TRACKPOSON on all population
 #!/bin/bash
 
 list_file=$(ls /home/database/Beech_genomes/Massane/RAWDATA/*1_H2VCTDSXY*)
