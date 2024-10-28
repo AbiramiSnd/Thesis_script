@@ -2,6 +2,8 @@
 
 
 ```{r}
+# The aim of this script is to describe squirrel1 and squirrel2 abundance in ONT eccDNA samples
+
 # Load libraries
 library(ggplot2)
 library(tidyverse)
