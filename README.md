@@ -12,6 +12,9 @@ The Rmd files to generate figures are launched under Rstudio.
 ## Structure
 Here is the detailed organisation of the folders and scripts. 
 
+### TE_library_clustering
+> ├ **clustering_te_library.sh**     # eccDNA peaks calling (using total read coverage and split read and disordant read coverage) and intersection with TE annotation using eccDNA Illumina samples\
+
 
 ### eccDNA_SR
 > ├ **eccdna_sr_analysis.sh**     # eccDNA peaks calling (using total read coverage and split read and disordant read coverage) and intersection with TE annotation using eccDNA Illumina samples\
