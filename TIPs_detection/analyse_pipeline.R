@@ -1,8 +1,7 @@
-#####
-# Automatic analysis of TRACKPOSON output
-#Create final matrix 
-#####
+# Tha aim of this script is to generate numerical matrix of TIP containing windows as rows and individual as columns per TE family
+#!/usr/bin/bash
 
+# Load libraries
 library(pheatmap)
 library(tidyverse)
 `%nin%` <- negate(`%in%`)
