@@ -1,3 +1,5 @@
+# The aim of to call insertions of a TE consensus on all samples and generate a bedfile of TIPs containing windows per individual
+
 #!/bin/bash
 
 #PBS -N trackposon     
