@@ -1,3 +1,4 @@
+# The aim of this script to launch GWAS on all TE numerical matrices in a folder using a loop
 #!/bin/bash
 
 te_tmp=$1
