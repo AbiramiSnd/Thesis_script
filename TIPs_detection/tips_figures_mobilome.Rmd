@@ -1,7 +1,7 @@
 
 
 ```{r}
-# The aim of this script is to describe TIPs in the massane beech population
+# The aim of this script is to filter TIP windows with abberant number of families, To plot copy number and tips pet TE family
 
 # Read data with LTR TIP windows with family 
 data_ltr=read.table(file="all_LTRs_ins_TE_ind2.csv2.bed",header=T)
@@ -67,6 +67,8 @@ ggplot(data,aes(y=count,x=mean)) + geom_point(col="black",size=6) +theme_bw()+th
 
 
 ```{r}
+# The aim of this script is the number of TIPs per individual and number of different TE families within a TIP window
+
 ind=read.table(file="/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE/ind.txt")
 
 # Read filtered insertions file after removing windows with abberrant number of LTR TIPs
@@ -117,6 +119,8 @@ ggplot(sub2,aes(y=log(Count),fill=te)) + geom_boxplot(col="black",size=1.4) +the
 
 
 ```{r}
+# The aim of this script is the frequency of TIPs and distance to closest gene
+
 # Read filtered insertions file after removing windows with aberrant number of MITE TIPs
 setwd("/home/lgdp/Desktop/TRACKPOSON_test/TRACKPOSON_test3/MITE")
 data_m=read.table(file="all_MITEs_ins_TE_ind2.csv2.bed",header=T)
