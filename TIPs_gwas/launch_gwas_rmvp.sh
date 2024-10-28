@@ -3,5 +3,5 @@ list=$(ls used_matrix2/*.csv)
 
 for i in $list
 do
-./Run_TE_gwas_Rmvp.sh $i
+./run_TE_gwas_rmvp.sh $i
 done
